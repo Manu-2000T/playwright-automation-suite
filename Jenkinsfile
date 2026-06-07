@@ -14,33 +14,26 @@ pipeline {
 
     stage('Install dependencies') {
       steps {
-        sh 'npm ci'
+        bat 'npm ci --no-audit --no-fund'
       }
     }
 
     stage('Install Playwright browsers') {
       steps {
-        sh 'npx playwright install --with-deps'
+        bat 'npx playwright install --with-deps'
       }
     }
 
     stage('Run Playwright tests') {
       steps {
-        sh 'npm run test:ci'
+        bat 'npm run test:ci'
       }
     }
   }
 
   post {
     always {
-      publishHTML(target: [
-        allowMissing: true,
-        alwaysLinkToLastBuild: true,
-        keepAll: true,
-        reportDir: 'playwright-report',
-        reportFiles: 'index.html',
-        reportName: 'Playwright Report'
-      ])
+      archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive: true
     }
     success {
       echo 'Playwright test run completed successfully.'
