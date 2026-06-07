@@ -11,7 +11,7 @@ export default defineConfig({
   globalTeardown: './global-teardown',
   use: {
     baseURL: 'https://demowebshop.tricentis.com',
-    headless: false,
+    headless: !!process.env.CI,
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
     trace: 'retain-on-failure'
