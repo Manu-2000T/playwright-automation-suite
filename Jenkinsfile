@@ -3,6 +3,8 @@ pipeline {
 
   environment {
     CI = 'true'
+    LOGIN_EMAIL = credentials('demowebshop-email')
+    LOGIN_PASSWORD = credentials('demowebshop-password')
   }
 
   stages {
