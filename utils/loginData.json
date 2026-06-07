@@ -1,0 +1,22 @@
+{
+  "validUsers": [
+    {
+      "email": "sanjupunch456@gmail.com",
+      "password": "n!iFC7GPXij#z$"
+    }
+  ],
+  "invalidUsers": [
+    {
+      "email": "invalid@test.com",
+      "password": "WrongPassword"
+    },
+    {
+      "email": "invalidEmail",
+      "password": "Password123"
+    }
+  ],
+  "emptyFields": {
+    "email": "",
+    "password": ""
+  }
+}
