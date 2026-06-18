@@ -3,6 +3,8 @@ pipeline {
 
   environment {
     CI = 'true'
+    LOGIN_EMAIL = credentials('demowebshop-email')
+    LOGIN_PASSWORD = credentials('demowebshop-password')
   }
 
   stages {
@@ -33,7 +35,13 @@ pipeline {
 
   post {
     always {
-      echo 'Pipeline finished. Check the console output for test results.'
+      archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive: true
+    }
+    success {
+      echo 'Playwright test run completed successfully.'
+    }
+    failure {
+      echo 'Playwright test run failed. Check the report and console output.'
     }
   }
 }

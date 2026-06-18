@@ -1,18 +1,16 @@
 import { test, expect } from '../Fixtures/fixtures';
-import { loadLoginData } from '../utils/dataLoader';
+import { loadLoginData, envUser } from '../utils/dataLoader';
 
 const loginData = loadLoginData();
 
 test.describe('Demo Web Shop - Login Tests', () => {
 
-  test('Valid login using seeded credentials', { tag: ['@smoke', '@regression'] }, async ({ page, loginPage, homePage }) => {
-    const seededUser = loginData.validUsers[0];
-
+  test('Valid login using .env credentials', { tag: ['@smoke', '@regression'] }, async ({ page, loginPage, homePage }) => {
     await loginPage.goto();
-    await loginPage.login(seededUser.email, seededUser.password);
+    await loginPage.login(envUser.email, envUser.password);
     await page.waitForURL(/\/$/);
 
-    await expect(homePage.accountLabel).toContainText(seededUser.email);
+    await expect(homePage.accountLabel).toContainText(envUser.email);
   });
 
   for (const user of loginData.validUsers) {

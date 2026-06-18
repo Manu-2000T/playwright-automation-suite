@@ -16,7 +16,10 @@ export default defineConfig({
     video: 'retain-on-failure',
     trace: 'retain-on-failure'
   },
-  reporter: [['html', { outputFolder: 'playwright-report' }]]
+  reporter: [
+    ['html', { outputFolder: 'playwright-report' }],
+    ['allure-playwright', { outputFolder: 'allure-results' }]
+  ]
 });
 
 // import { defineConfig, devices } from '@playwright/test';

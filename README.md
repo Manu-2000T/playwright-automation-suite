@@ -43,7 +43,17 @@ npm run test:ci
 ```
 
 ## Reports
-Playwright HTML reports are generated in `playwright-report/`.
+- Playwright HTML reports are generated in `playwright-report/`.
+- Allure reports are generated in `allure-results/` and can be turned into a readable report with:
+  ```bash
+  npm run allure:generate
+  npm run allure:open
+  ```
+
+Run tests with Allure output enabled:
+```bash
+npm run test:allure
+```
 
 ## CI/CD
 - GitHub Actions: `.github/workflows/playwright.yml`
