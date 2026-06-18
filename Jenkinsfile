@@ -1,6 +1,10 @@
 pipeline {
   agent any
 
+  triggers {
+    cron('30 23 * * *')   // 5:00 AM IST daily
+  }
+
   environment {
     CI = 'true'
   }
@@ -38,7 +42,7 @@ pipeline {
 
   post {
     always {
-      node('built-in') {               // ← fixes "Required context class hudson.FilePath is missing"
+      node('built-in') {
         archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive: true
       }
     }
