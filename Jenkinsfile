@@ -3,8 +3,6 @@ pipeline {
 
   environment {
     CI = 'true'
-    LOGIN_EMAIL = credentials('demowebshop-email')
-    LOGIN_PASSWORD = credentials('demowebshop-password')
   }
 
   stages {
@@ -22,20 +20,27 @@ pipeline {
 
     stage('Install Playwright browsers') {
       steps {
-        bat 'npx playwright install --with-deps'
+        bat 'npx playwright install'
       }
     }
 
     stage('Run Playwright tests') {
       steps {
-        bat 'npm run test:ci'
+        withCredentials([
+          string(credentialsId: 'demowebshop-email',    variable: 'LOGIN_EMAIL'),
+          string(credentialsId: 'demowebshop-password', variable: 'LOGIN_PASSWORD')
+        ]) {
+          bat 'npm run test:ci'
+        }
       }
     }
   }
 
   post {
     always {
-      archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive: true
+      node('built-in') {               // ← fixes "Required context class hudson.FilePath is missing"
+        archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive: true
+      }
     }
     success {
       echo 'Playwright test run completed successfully.'
