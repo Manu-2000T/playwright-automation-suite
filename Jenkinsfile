@@ -51,11 +51,21 @@ pipeline {
     }
     success {
       echo 'Playwright test run completed successfully.'
-      githubNotify context: 'ci/jenkins-smoke-and-full', status: 'SUCCESS', description: 'All checks passed'
+      publishChecks(
+        name: 'ci/jenkins-smoke-and-full',
+        title: 'All checks passed',
+        summary: 'Smoke and full test suite passed',
+        conclusion: 'SUCCESS'
+      )
     }
     failure {
       echo 'Playwright test run failed. Check the report and console output.'
-      githubNotify context: 'ci/jenkins-smoke-and-full', status: 'FAILURE', description: 'Smoke or full test suite failed'
+      publishChecks(
+        name: 'ci/jenkins-smoke-and-full',
+        title: 'Tests failed',
+        summary: 'Smoke or full test suite failed',
+        conclusion: 'FAILURE'
+      )
     }
   }
 }
